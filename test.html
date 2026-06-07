@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Викторина - Тест</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style_quiz.css') }}">
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const labels = document.querySelectorAll('.form_radio_btn label');
+
+            labels.forEach(label => {
+                label.addEventListener('click', function () {
+                    labels.forEach(l => l.classList.remove('selected'));
+                    this.classList.add('selected');
+                });
+            });
+        });
+    </script>
+</head>
+<body>
+    <form method="post" action="/save_answer">
+        <div class="outer_div">
+            {% if question %}
+                <h1>{{question}}</h1>
+            {% endif %}
+            <input type="hidden" name="q_id" value="{{quest_id}}">
+
+            {% for answer in answers_list %}
+                <div class="form_radio_btn">
+                    <input id="radio{{loop.index}}" type="radio" name="ans_text" value="{{answer}}">
+                    <label for="radio{{loop.index}}">
+                        {{answer}}
+                    </label>
+                </div>
+            {% endfor %}
+
+            <div class="inner_div">
+                <p><input class="btn" type="submit" value="Ответить"></p>
+            </div>
+        </div>
+    </form>
+</body>
+</html>
